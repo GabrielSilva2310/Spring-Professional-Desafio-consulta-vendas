@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.devsuperior.dsmeta.dto.SaleMinDTO;
+import com.devsuperior.dsmeta.dto.SummaryDTO;
 import com.devsuperior.dsmeta.entities.Sale;
 import com.devsuperior.dsmeta.repositories.SaleRepository;
 
@@ -50,6 +51,28 @@ public class SaleService {
 		return result.map(x-> new SaleMinDTO(x));
 	}
 	
+
+	public List<SummaryDTO> getSummary(String minDate, String maxDate){
+		LocalDate defaultData=LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
+		LocalDate initialDate;
+		LocalDate finalDate;
+		if(maxDate.isBlank()) {
+			finalDate=defaultData;
+		}
+		else {
+			finalDate=LocalDate.parse(maxDate);
+		}
+		if(minDate.isBlank()) {
+			initialDate=finalDate.minusYears(1L);
+		}
+		else {
+			initialDate=LocalDate.parse(minDate);
+		}
+		return repository.search2(initialDate, finalDate);
+	
+		
+	}
+
 	
 	
 }

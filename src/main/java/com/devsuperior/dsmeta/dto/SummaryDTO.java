@@ -1,5 +1,7 @@
 package com.devsuperior.dsmeta.dto;
 
+import com.devsuperior.dsmeta.entities.Sale;
+
 public class SummaryDTO {
 	
 	private String sellerName;
@@ -13,6 +15,12 @@ public class SummaryDTO {
 		this.sellerName = sellerName;
 		this.total = total;
 	}
+	
+	public SummaryDTO(Sale entity) {
+		sellerName = entity.getSeller().getName();
+		total = entity.getAmount();
+	}
+	
 
 	public String getSellerName() {
 		return sellerName;
